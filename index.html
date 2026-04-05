@@ -530,6 +530,15 @@
         <!-- Scroll container -->
         <div id="news-container" class="flex-1 overflow-y-auto space-y-3 pr-1"></div>
 
+        <div class="mt-5 pt-5 border-t border-white/[0.04] flex flex-col items-center">
+          <p class="font-mono text-[11px] text-white/60 mb-3 text-center leading-relaxed">
+            Stay ahead of the AI curve. Get real-time developments delivered straight to your phone for <span class="text-lime font-bold">free</span>.
+          </p>
+          <a href="https://t.me/geonewsA3" target="_blank" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/40 transition-all font-mono text-xs tracking-wider uppercase w-full">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Join GeoNews Ai</span>
+          </a>
+        </div>
       </div>
       <!-- Card 3 -->
       <div class="bento-card glass rounded-2xl p-8 fade-up" style="border:1px solid rgba(255,255,255,0.05)">
@@ -607,14 +616,13 @@
             <li>• Real automation without marketing fluff</li>
           </ul>
         </div>
-        <div class="relative rounded-3xl overflow-hidden bg-black/60 border border-white/[0.08] h-[320px]">
-
-          <img id="wf1" src="workflow1.png"
-            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100" />
-
-          <img id="wf2" src="workflow2.png"
-            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
-
+        <div class="relative rounded-3xl bg-black/60 border border-white/[0.08] h-[320px]" style="perspective: 1200px;">
+          <div id="wf-cube" class="w-full h-full absolute top-0 left-0" style="transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); transform: translateZ(-160px) rotateX(0deg);">
+            <img id="face0" src="workflow1.png" class="absolute inset-0 w-full h-full object-cover rounded-3xl" style="backface-visibility: hidden; transform: rotateX(0deg) translateZ(160px);" />
+            <img id="face1" src="workflow2.png" class="absolute inset-0 w-full h-full object-cover rounded-3xl" style="backface-visibility: hidden; transform: rotateX(90deg) translateZ(160px);" />
+            <img id="face2" src="workflow3.png" class="absolute inset-0 w-full h-full object-cover rounded-3xl" style="backface-visibility: hidden; transform: rotateX(180deg) translateZ(160px);" />
+            <img id="face3" src="workflow1.png" class="absolute inset-0 w-full h-full object-cover rounded-3xl" style="backface-visibility: hidden; transform: rotateX(270deg) translateZ(160px);" />
+          </div>
         </div>
       </div>
     </div>
@@ -966,26 +974,26 @@ Message: ${message}`
     setInterval(loadNews, 5000);
     loadNews();
 
-    // ROTATING WORKFLOW SCREENSHOTS
+    // ROTATING WORKFLOW SCREENSHOTS (3D CUBE)
+    const wfCube = document.getElementById("wf-cube");
+    const wfFaces = [
+      document.getElementById("face0"),
+      document.getElementById("face1"),
+      document.getElementById("face2"),
+      document.getElementById("face3")
+    ];
     const wfImages = ["workflow1.png", "workflow2.png", "workflow3.png"];
-    let wfIndex = 0;
+    let wfAngle = 0;
+    let currentFace = 0;
+    let currentImage = 0;
 
     setInterval(() => {
-      const a = document.getElementById("wf1");
-      const b = document.getElementById("wf2");
+      currentFace = (currentFace + 1) % 4;
+      currentImage = (currentImage + 1) % wfImages.length;
+      wfFaces[currentFace].src = wfImages[currentImage];
 
-      wfIndex = (wfIndex + 1) % wfImages.length;
-
-      b.src = wfImages[wfIndex];
-      b.style.opacity = 1;
-      a.style.opacity = 0;
-
-      setTimeout(() => {
-        a.src = wfImages[wfIndex];
-        a.style.opacity = 1;
-        b.style.opacity = 0;
-      }, 1000);
-
+      wfAngle -= 90;
+      wfCube.style.transform = `translateZ(-160px) rotateX(${wfAngle}deg)`;
     }, 3000);
   </script>
 </body>

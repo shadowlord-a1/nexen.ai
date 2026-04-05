@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>AI Automation Agency | Build Autonomous Systems | NexeN</title>
+  <meta name="description"
+    content="NexeN builds AI systems that automate your business operations end-to-end for startups, agencies, and enterprise teams." />
+  <link rel="icon" type="image/png" href="Agency-logo.png" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/framer-motion@11.0.3/dist/framer-motion.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { lime: '#CCFF00', cyan: '#00F0FF', dark: '#000000' }, fontFamily: { display: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] } } } }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden
+    }
+
+    ::selection {
+      background: #CCFF00;
+      color: #000
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #CCFF00;
+      border-radius: 3px
+    }
+
+    /* Grain overlay */
+    .grain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.05
+    }
+
+    .grain svg {
+      width: 100%;
+      height: 100%
+    }
+
+    /* Glass effect */
+    .glass {
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 1px solid rgba(255, 255, 255, 0.08)
+    }
+
+    /* Pulse dot */
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #CCFF00;
+      border-radius: 50%;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(204, 255, 0, 0.5)
+      }
+
+      50% {
+        box-shadow: 0 0 0 8px rgba(204, 255, 0, 0)
+      }
+    }
+
+    /* Marching ants */
+    @keyframes march {
+      to {
+        stroke-dashoffset: -24
+      }
+    }
+
+    .marching {
+      animation: march 0.6s linear infinite
+    }
+
+    /* Marquee */
+    @keyframes marquee {
+      0% {
+        transform: translateX(0)
+      }
+
+      100% {
+        transform: translateX(-50%)
+      }
+    }
+
+    .marquee-track {
+      animation: marquee 25s linear infinite
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused
+    }
+
+    /* Magnetic button */
+    .mag-btn {
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    }
+
+    /* Bento hover */
+    .bento-card {
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    }
+
+    .bento-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(204, 255, 0, 0.2)
+    }
+
+    /* Terminal cursor blink */
+    @keyframes blink {
+
+      0%,
+      50% {
+        opacity: 1
+      }
+
+      51%,
+      100% {
+        opacity: 0
+      }
+    }
+
+    .cursor-blink {
+      animation: blink 1s step-end infinite
+    }
+
+    /* Node pulse */
+    @keyframes nodePulse {
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 8px rgba(204, 255, 0, 0.3))
+      }
+
+      50% {
+        filter: drop-shadow(0 0 20px rgba(204, 255, 0, 0.6))
+      }
+    }
+
+    .node-glow {
+      animation: nodePulse 3s ease-in-out infinite
+    }
+
+    /* Fade in */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    /* Hero gradient follower */
+    #hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(204, 255, 0, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: left 0.3s ease-out, top 0.3s ease-out;
+      z-index: 0
+    }
+
+    /* Data flow particle */
+    @keyframes flowParticle {
+      0% {
+        offset-distance: 0%
+      }
+
+      100% {
+        offset-distance: 100%
+      }
+    }
+
+    /* Hero watermark */
+    .hero-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 0;
+      width: clamp(300px, 50vw, 600px);
+      height: auto
+    }
+
+    /* Copy tooltip */
+    .copy-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #CCFF00;
+      color: #000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: 12px;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 10000;
+      letter-spacing: 0.1em
+    }
+
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0)
+    }
+
+    /* Footer link hover */
+    .footer-link {
+      transition: color 0.2s ease
+    }
+
+    .footer-link:hover {
+      color: #CCFF00 !important
+    }
+
+    #news-container {
+      scroll-behavior: smooth;
+    }
+
+    .news-item {
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: 'JetBrains Mono';
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.7);
+      transition: 0.3s;
+    }
+
+    .news-item:hover {
+      border-color: #CCFF00;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono';
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.02);
+      transition: all 0.25s ease;
+    }
+
+    .social-btn:hover {
+      border-color: rgba(204, 255, 0, 0.4);
+      color: #CCFF00;
+      transform: translateX(4px);
+      background: rgba(204, 255, 0, 0.05);
+    }
+
+    .social-number {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.3);
+      width: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- GRAIN OVERLAY -->
+  <div class="grain"><svg>
+      <filter id="g">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+      </filter>
+      <rect width="100%" height="100%" filter="url(#g)" />
+    </svg></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar"
+    class="fixed top-4 left-1/2 -translate-x-1/2 z-50 glass rounded-2xl px-6 py-3 flex items-center justify-between w-[92%] max-w-6xl"
+    style="border-bottom:1px solid rgba(255,255,255,0.04)">
+    <a href="#" class="flex items-center gap-3">
+      <img src="Agency-logo.png" alt="NexeN" class="h-10" style="filter:drop-shadow(0 0 16px rgba(204,255,0,0.4))" />
+      <span class="font-mono text-xs tracking-[0.3em] text-white/50 uppercase hidden sm:inline">NexeN.AI</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#labs"
+        class="font-mono text-xs tracking-widest text-white/60 hover:text-lime transition-colors uppercase">Labs</a>
+      <a href="#pipeline"
+        class="font-mono text-xs tracking-widest text-white/60 hover:text-lime transition-colors uppercase">Pipeline</a>
+      <a href="#contact"
+        class="font-mono text-xs tracking-widest text-white/60 hover:text-lime transition-colors uppercase">Command</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06]">
+        <div class="pulse-dot"></div>
+        <span class="font-mono text-[10px] tracking-widest text-lime uppercase">AI Nodes: Active</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <img src="Agency-logo.png" alt="" class="hero-watermark" aria-hidden="true" />
+    <div id="hero-glow" style="left:50%;top:50%"></div>
+    <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
+        style="border:1px solid rgba(204,255,0,0.1)">
+        <div class="w-2 h-2 rounded-full bg-lime"></div>
+        <span class="font-mono text-[11px] tracking-[0.2em] text-lime/80 uppercase">System Online — v3.2.1</span>
+      </div>
+      <h1
+        class="font-display font-900 text-5xl md:text-7xl lg:text-[5.5rem] tracking-tighter uppercase leading-[0.9] mb-6">
+        Artificial<br /><span class="text-lime">Autonomous</span><br />Systems<span class="text-lime">.</span>
+      </h1>
+      <p class="font-display text-lg md:text-xl text-white/40 max-w-2xl mx-auto mb-6 font-light tracking-tight">
+        High-throughput automation for elite enterprises. We design, build, and deploy intelligent systems that operate
+        at machine speed.
+      </p>
+      <p class="font-display text-base md:text-lg text-white/40 max-w-2xl mx-auto mb-10 font-light tracking-tight">
+        We build AI systems that automate your business operations end-to-end.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#contact" id="cta-main"
+          class="mag-btn group relative inline-flex items-center gap-3 px-8 py-4 bg-lime text-black font-mono font-bold text-sm tracking-widest uppercase rounded-xl hover:bg-white transition-colors">
+          <span>Deploy My AI Workflow</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+            stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a href="#labs"
+          class="inline-flex items-center gap-3 px-8 py-4 glass text-white/70 font-mono text-sm tracking-widest uppercase rounded-xl hover:text-white transition-colors"
+          style="border:1px solid rgba(255,255,255,0.06)">
+          <span>Explore Automation Audit</span>
+        </a>
+      </div>
+      <div class="mt-6 font-mono text-[11px] uppercase tracking-[0.3em] text-white/40">
+        Projects start at $2,000+ · Accepting 3 new clients this month
+      </div>
+    </div>
+    <!-- Decorative grid -->
+    <div class="absolute inset-0 opacity-[0.03]"
+      style="background-image:linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px);background-size:60px 60px">
+    </div>
+  </section>
+
+  <section id="audience" class="py-12 px-4 max-w-6xl mx-auto">
+    <div class="grid gap-6 md:grid-cols-2">
+      <div class="glass rounded-3xl p-8" style="border:1px solid rgba(255,255,255,0.05)">
+        <span class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase">// Who This Is For</span>
+        <h3 class="font-display font-800 text-3xl tracking-tighter uppercase mt-4 mb-6">Built for:</h3>
+        <ul class="space-y-3 font-mono text-sm text-white/60">
+          <li>• SaaS founders automating growth operations</li>
+          <li>• Agencies scaling client workflows</li>
+          <li>• Crypto & AI startups shipping intelligent products</li>
+          <li>• Teams needing high-volume content or support systems</li>
+        </ul>
+      </div>
+      <div class="glass rounded-3xl p-8" style="border:1px solid rgba(255,255,255,0.05)">
+        <span class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase">// What You Automate</span>
+        <h3 class="font-display font-800 text-3xl tracking-tighter uppercase mt-4 mb-6">We automate:</h3>
+        <ul class="space-y-3 font-mono text-sm text-white/60">
+          <li>• Lead generation and CRM workflows</li>
+          <li>• Content pipelines and publishing systems</li>
+          <li>• Telegram / WhatsApp bots and messaging ops</li>
+          <li>• AI customer support and task orchestration</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="relative py-8 border-t border-b border-white/[0.04] overflow-hidden">
+    <div class="marquee-track flex items-center gap-12 whitespace-nowrap" style="width:max-content">
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="brain" class="w-4 h-4"></i>OpenAI</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="workflow" class="w-4 h-4"></i>n8n</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="send" class="w-4 h-4"></i>Telegram</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="cloud" class="w-4 h-4"></i>Supabase</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="database" class="w-4 h-4"></i>PostgreSQL</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="zap" class="w-4 h-4"></i>Vercel</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="git-branch" class="w-4 h-4"></i>LangChain</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="cpu" class="w-4 h-4"></i>Anthropic</span>
+      <!-- duplicate for seamless loop -->
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="brain" class="w-4 h-4"></i>OpenAI</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="workflow" class="w-4 h-4"></i>n8n</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="send" class="w-4 h-4"></i>Telegram</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="cloud" class="w-4 h-4"></i>Supabase</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="database" class="w-4 h-4"></i>PostgreSQL</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="zap" class="w-4 h-4"></i>Vercel</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="git-branch" class="w-4 h-4"></i>LangChain</span>
+      <span class="font-mono text-sm tracking-widest text-white/20 uppercase flex items-center gap-3"><i
+          data-lucide="cpu" class="w-4 h-4"></i>Anthropic</span>
+    </div>
+  </div>
+
+  <!-- THE LABS — BENTO GRID -->
+  <section id="labs" class="py-24 px-4 max-w-6xl mx-auto">
+    <div class="mb-16 fade-up">
+      <span class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase">// The Labs</span>
+      <h2 class="font-display font-800 text-4xl md:text-5xl tracking-tighter uppercase mt-3">
+        Deployment<br />Modules<span class="text-lime">.</span></h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Featured Card — spans 2 cols -->
+      <div class="bento-card glass rounded-2xl p-8 md:col-span-2 lg:col-span-2 fade-up"
+        style="border:1px solid rgba(255,255,255,0.05)">
+        <div class="flex items-center gap-2 mb-6">
+          <div class="w-2 h-2 rounded-full bg-cyan"></div>
+          <span class="font-mono text-[10px] tracking-[0.2em] text-cyan uppercase">Featured Module</span>
+        </div>
+        <h3 class="font-display font-800 text-2xl md:text-3xl tracking-tighter uppercase mb-3">Neural Intelligence
+          Engine<span class="text-lime">.</span></h3>
+        <p class="text-white/40 text-sm mb-8 max-w-lg">Real-time AI news curation & summarization. Our n8n-to-Telegram
+          pipeline processes 12,000+ messages daily with sub-second latency.</p>
+        <!-- Mockup -->
+        <div class="relative rounded-xl overflow-hidden bg-black/50 p-6 border border-white/[0.04]">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+            <span class="font-mono text-[10px] text-white/30 ml-2">nexen_pipeline_v3.workflow</span>
+          </div>
+          <div class="flex items-center gap-4 flex-wrap">
+            <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06]">
+              <i data-lucide="rss" class="w-4 h-4 text-cyan"></i>
+              <span class="font-mono text-xs text-white/60">RSS_INGEST</span>
+            </div>
+            <svg class="w-8 h-2 text-lime/40">
+              <line x1="0" y1="4" x2="32" y2="4" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"
+                class="marching" />
+            </svg>
+            <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-lime/10 border border-lime/20">
+              <i data-lucide="brain" class="w-4 h-4 text-lime"></i>
+              <span class="font-mono text-xs text-lime">GPT_SUMMARIZE</span>
+            </div>
+            <svg class="w-8 h-2 text-lime/40">
+              <line x1="0" y1="4" x2="32" y2="4" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"
+                class="marching" />
+            </svg>
+            <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06]">
+              <i data-lucide="send" class="w-4 h-4 text-cyan"></i>
+              <span class="font-mono text-xs text-white/60">TG_DISPATCH</span>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center gap-4">
+            <span class="font-mono text-[10px] text-white/20">THROUGHPUT: 847 msg/hr</span>
+            <span class="font-mono text-[10px] text-lime/40">● OPERATIONAL</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="bento-card glass rounded-2xl p-6 fade-up h-full flex flex-col"
+        style="border:1px solid rgba(255,255,255,0.05)">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-[10px] tracking-[0.2em] text-cyan uppercase">Live Feed</span>
+          <div class="flex items-center gap-2 text-lime text-[10px] font-mono">
+            <div class="pulse-dot"></div>
+            LIVE
+          </div>
+        </div>
+
+        <h3 class="font-display font-700 text-lg tracking-tighter uppercase mb-4">
+          AI News Stream<span class="text-lime">.</span>
+        </h3>
+
+        <!-- Scroll container -->
+        <div id="news-container" class="flex-1 overflow-y-auto space-y-3 pr-1"></div>
+
+      </div>
+      <!-- Card 3 -->
+      <div class="bento-card glass rounded-2xl p-8 fade-up" style="border:1px solid rgba(255,255,255,0.05)">
+        <div class="w-12 h-12 rounded-xl bg-cyan/10 flex items-center justify-center mb-6">
+          <i data-lucide="bot" class="w-6 h-6 text-cyan"></i>
+        </div>
+        <h3 class="font-display font-700 text-lg tracking-tighter uppercase mb-2">Autonomous Agent Deployment<span
+            class="text-lime">.</span></h3>
+        <p class="text-white/40 text-sm">Self-healing agents with memory persistence. Deploy once, iterate forever.</p>
+        <div class="mt-6 pt-4 border-t border-white/[0.04]">
+          <span class="font-mono text-[10px] text-cyan/60 tracking-widest">AGENTS: 38 DEPLOYED</span>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="bento-card glass rounded-2xl p-8 fade-up" style="border:1px solid rgba(255,255,255,0.05)">
+        <div class="w-12 h-12 rounded-xl bg-lime/10 flex items-center justify-center mb-6">
+          <i data-lucide="plug" class="w-6 h-6 text-lime"></i>
+        </div>
+        <h3 class="font-display font-700 text-lg tracking-tighter uppercase mb-2">Enterprise API Bridges<span
+            class="text-lime">.</span></h3>
+        <p class="text-white/40 text-sm">Connect any SaaS stack. REST, GraphQL, WebSocket — all bridged in real-time.
+        </p>
+        <div class="mt-6 pt-4 border-t border-white/[0.04]">
+          <span class="font-mono text-[10px] text-cyan/60 tracking-widest">ENDPOINTS: 200+</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="case-studies" class="py-24 px-4 max-w-6xl mx-auto">
+    <div class="mb-16 fade-up">
+      <span class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase">// Case Studies</span>
+      <h2 class="font-display font-800 text-4xl md:text-5xl tracking-tighter uppercase mt-3">Proof<br />that moves
+        revenue<span class="text-lime">.</span></h2>
+    </div>
+    <div class="grid gap-4 md:grid-cols-3">
+      <div class="glass rounded-2xl p-8" style="border:1px solid rgba(255,255,255,0.05)">
+        <span class="font-mono text-[10px] tracking-[0.2em] text-cyan uppercase">FinOps Automation</span>
+        <p class="font-display font-700 text-xl text-white mt-4 mb-4">Reduced manual ops by 82% for a finance platform.
+        </p>
+        <p class="text-white/40 text-sm">Connected data ingestion, model orchestration, and reporting into a single
+          autonomous workflow.</p>
+      </div>
+      <div class="glass rounded-2xl p-8" style="border:1px solid rgba(255,255,255,0.05)">
+        <span class="font-mono text-[10px] tracking-[0.2em] text-cyan uppercase">Messaging Pipeline</span>
+        <p class="font-display font-700 text-xl text-white mt-4 mb-4">Automated 12k messages/day for a news distribution
+          system.</p>
+        <p class="text-white/40 text-sm">From ingestion to dispatch, the pipeline runs with 99.97% uptime and minimal
+          manual supervision.</p>
+      </div>
+      <div class="glass rounded-2xl p-8" style="border:1px solid rgba(255,255,255,0.05)">
+        <span class="font-mono text-[10px] tracking-[0.2em] text-cyan uppercase">Support Systems</span>
+        <p class="font-display font-700 text-xl text-white mt-4 mb-4">Delivered 18x throughput improvement for
+          enterprise support flows.</p>
+        <p class="text-white/40 text-sm">Automated ticket triage, responses, and handoff with an AI-driven orchestration
+          layer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" class="py-24 px-4 max-w-6xl mx-auto">
+    <div class="mb-16 fade-up">
+      <span class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase">// Demo</span>
+      <h2 class="font-display font-800 text-4xl md:text-5xl tracking-tighter uppercase mt-3">See a live automation
+        flow<span class="text-lime">.</span></h2>
+    </div>
+    <div class="fade-up glass rounded-2xl p-8 md:p-12" style="border:1px solid rgba(255,255,255,0.05)">
+      <div class="grid gap-6 lg:grid-cols-[1.4fr_1fr] items-center">
+        <div>
+          <p class="font-display text-xl text-white mb-6">Video walkthrough of an n8n workflow, Telegram dispatch, and
+            end-to-end automation in action.</p>
+          <ul class="space-y-3 font-mono text-sm text-white/60">
+            <li>• n8n workflow triggers, model routing, and dispatch</li>
+            <li>• Telegram bot output, message validation, and persistence</li>
+            <li>• Real automation without marketing fluff</li>
+          </ul>
+        </div>
+        <div class="relative rounded-3xl overflow-hidden bg-black/60 border border-white/[0.08] h-[320px]">
+
+          <img id="wf1" src="workflow1.png"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100" />
+
+          <img id="wf2" src="workflow2.png"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0" />
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE PIPELINE — N8N VISUALIZER -->
+  <section id="pipeline" class="py-24 px-4 max-w-6xl mx-auto">
+    <div class="mb-16 fade-up">
+      <span class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase">// Live Pipeline</span>
+      <h2 class="font-display font-800 text-4xl md:text-5xl tracking-tighter uppercase mt-3">
+        System<br />Architecture<span class="text-lime">.</span></h2>
+    </div>
+    <div class="fade-up glass rounded-2xl p-8 md:p-12" style="border:1px solid rgba(255,255,255,0.05)">
+      <div class="flex items-center gap-2 mb-8">
+        <div class="pulse-dot"></div>
+        <span class="font-mono text-[10px] tracking-[0.2em] text-lime uppercase">Pipeline Active — Latency: 12ms</span>
+      </div>
+      <svg id="pipeline-svg" viewBox="0 0 900 200" class="w-full" style="max-height:220px">
+        <!-- Node 1: DATA_SOURCE -->
+        <g class="node-glow">
+          <rect x="20" y="60" width="200" height="80" rx="16" fill="rgba(255,255,255,0.03)" stroke="rgba(0,240,255,0.3)"
+            stroke-width="1.5" />
+          <text x="120" y="95" text-anchor="middle" fill="#00F0FF" font-family="JetBrains Mono" font-size="11"
+            letter-spacing="2">DATA_SOURCE</text>
+          <text x="120" y="120" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono"
+            font-size="9">RSS • API • WEBHOOK</text>
+        </g>
+        <!-- Connection 1 -->
+        <line x1="220" y1="100" x2="350" y2="100" stroke="#CCFF00" stroke-width="2" stroke-dasharray="8 4"
+          class="marching" opacity="0.6" />
+        <polygon points="345,94 355,100 345,106" fill="#CCFF00" opacity="0.6" />
+        <!-- Node 2: NEXEN_CORE -->
+        <g class="node-glow">
+          <rect x="350" y="40" width="200" height="120" rx="16" fill="rgba(204,255,0,0.04)" stroke="rgba(204,255,0,0.4)"
+            stroke-width="2" />
+          <text x="450" y="85" text-anchor="middle" fill="#CCFF00" font-family="JetBrains Mono" font-size="13"
+            font-weight="bold" letter-spacing="3">NEXEN_CORE</text>
+          <text x="450" y="108" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono"
+            font-size="9">LLM ORCHESTRATION</text>
+          <text x="450" y="125" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-family="JetBrains Mono"
+            font-size="9">TRANSFORM • ENRICH</text>
+        </g>
+        <!-- Connection 2 -->
+        <line x1="550" y1="100" x2="680" y2="100" stroke="#CCFF00" stroke-width="2" stroke-dasharray="8 4"
+          class="marching" opacity="0.6" />
+        <polygon points="675,94 685,100 675,106" fill="#CCFF00" opacity="0.6" />
+        <!-- Node 3: TELEGRAM_OUTPUT -->
+        <g class="node-glow">
+          <rect x="680" y="60" width="200" height="80" rx="16" fill="rgba(255,255,255,0.03)"
+            stroke="rgba(0,240,255,0.3)" stroke-width="1.5" />
+          <text x="780" y="95" text-anchor="middle" fill="#00F0FF" font-family="JetBrains Mono" font-size="11"
+            letter-spacing="2">TG_OUTPUT</text>
+          <text x="780" y="120" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-family="JetBrains Mono"
+            font-size="9">CHANNEL • BOT • DM</text>
+        </g>
+      </svg>
+      <div class="flex flex-wrap items-center gap-6 mt-8 pt-6 border-t border-white/[0.04]">
+        <div class="flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-lime"></div><span class="font-mono text-[10px] text-white/40">NODES:
+            3</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-cyan"></div><span class="font-mono text-[10px] text-white/40">CONNECTIONS:
+            2</span>
+        </div>
+        <div class="flex items-center gap-2"><span class="font-mono text-[10px] text-white/20">UPTIME: 99.97%</span>
+        </div>
+        <div class="flex items-center gap-2"><span class="font-mono text-[10px] text-lime/40">LAST EXEC: 0.3s ago</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMAND CENTER — CONTACT -->
+  <section id="contact" class="py-24 px-4 max-w-4xl mx-auto">
+    <div class="mb-16 fade-up">
+      <span class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase">// Command Center</span>
+      <h2 class="font-display font-800 text-4xl md:text-5xl tracking-tighter uppercase mt-3">
+        Initialize<br />Contact<span class="text-lime">.</span></h2>
+    </div>
+    <div class="fade-up glass rounded-2xl p-8 md:p-12" style="border:1px solid rgba(255,255,255,0.05)">
+      <div class="flex items-center gap-2 mb-2">
+        <div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+        <div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+        <span class="font-mono text-[10px] text-white/30 ml-2">nexen_terminal v3.2</span>
+      </div>
+      <div class="font-mono text-[11px] text-white/20 mb-6">$ nexen --deploy audit --priority</div>
+      <form id="contact-form" class="space-y-6">
+        <div>
+          <label class="font-mono text-[11px] tracking-[0.2em] text-cyan/80 uppercase block mb-2">[Name]</label>
+          <input id="input-name" type="text" required placeholder="Enter full name..."
+            class="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 font-mono text-sm text-white placeholder-white/20 focus:outline-none focus:border-lime/40 transition-colors" />
+        </div>
+        <div>
+          <label class="font-mono text-[11px] tracking-[0.2em] text-cyan/80 uppercase block mb-2">[Email]</label>
+          <input id="input-email" type="email" required placeholder="Enter email address..."
+            class="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 font-mono text-sm text-white placeholder-white/20 focus:outline-none focus:border-lime/40 transition-colors" />
+        </div>
+        <div>
+          <label class="font-mono text-[11px] tracking-[0.2em] text-cyan/80 uppercase block mb-2">[Message]</label>
+          <textarea id="input-message" rows="4" required placeholder="Describe your automation needs..."
+            class="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-4 py-3 font-mono text-sm text-white placeholder-white/20 focus:outline-none focus:border-lime/40 transition-colors resize-none"></textarea>
+        </div>
+        <div class="flex items-center justify-between">
+          <span id="form-status" class="font-mono text-[10px] text-white/20"><span class="cursor-blink">█</span>
+            READY</span>
+          <button type="submit"
+            class="mag-btn px-8 py-3 bg-lime text-black font-mono font-bold text-sm tracking-widest uppercase rounded-xl hover:bg-white transition-colors flex items-center gap-2">
+            <span>Launch Audit</span>
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER BRAND BLOCK -->
+  <section class="py-20 px-4 border-t border-white/[0.04]">
+    <div class="max-w-6xl mx-auto text-center fade-up">
+      <img src="Agency-logo.png" alt="NexeN" class="h-20 md:h-24 mx-auto mb-6"
+        style="filter:drop-shadow(0 0 30px rgba(204,255,0,0.2))" />
+      <p class="font-display text-lg md:text-xl text-white/30 tracking-tight">Architecting Autonomous Systems.</p>
+    </div>
+  </section>
+
+  <!-- HIGH-DENSITY 4-COLUMN FOOTER -->
+  <footer class="border-t border-white/[0.04] pt-16 pb-8 px-4">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+
+      <!-- Column 1: Identity -->
+      <div>
+        <img src="Agency-logo.png" alt="NexeN" class="h-10 mb-4"
+          style="filter:drop-shadow(0 0 12px rgba(204,255,0,0.3))" />
+        <p class="font-display text-sm text-white/40 leading-relaxed mb-4">Architecting Autonomous Systems.</p>
+        <div class="flex items-center gap-2">
+          <div class="pulse-dot" style="width:6px;height:6px"></div>
+          <span class="font-mono text-[10px] text-lime/60 tracking-widest uppercase">All Systems Nominal</span>
+        </div>
+      </div>
+
+      <!-- Column 2: Direct Contact -->
+      <div>
+        <h4 class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase mb-6">// Direct</h4>
+        <div class="space-y-4">
+          <div>
+            <span class="font-mono text-[10px] text-white/30 tracking-widest uppercase block mb-1">Email</span>
+            <div class="flex items-center gap-2">
+              <a href="mailto:nagasaireddy0123@gmail.com"
+                class="footer-link font-mono text-xs text-white/60 hover:text-lime transition-colors break-all">nagasaireddy0123@gmail.com</a>
+              <button id="copy-email-btn" onclick="copyEmail()"
+                class="flex-shrink-0 p-1 rounded hover:bg-white/[0.05] transition-colors group" title="Copy email">
+                <i data-lucide="copy" class="w-3 h-3 text-white/30 group-hover:text-lime transition-colors"></i>
+              </button>
+            </div>
+          </div>
+          <div>
+            <span class="font-mono text-[10px] text-white/30 tracking-widest uppercase block mb-1">Phone</span>
+            <a href="tel:+917203959848" class="footer-link font-mono text-xs text-white/60">+91 72039 59848</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3: Socials -->
+      <div>
+        <h4 class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase mb-6">// Socials</h4>
+
+        <div class="space-y-3">
+
+          <!-- Instagram -->
+          <a href="https://instagram.com/geonews.ai" target="_blank" class="social-btn">
+            <span class="social-number">1</span>
+            <i data-lucide="instagram" class="w-4 h-4"></i>
+            <span>@geonews.ai-> instagram</span>
+          </a>
+
+          <!-- Facebook -->
+          <a href="https://facebook.com/GeoNewsAI" target="_blank" class="social-btn">
+            <span class="social-number">2</span>
+            <i data-lucide="facebook" class="w-4 h-4"></i>
+            <span>GeoNews AI-> facebook</span>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="https://linkedin.com/in/nagasai-reddy-nexen" target="_blank" class="social-btn">
+            <span class="social-number">3</span>
+            <i data-lucide="linkedin" class="w-4 h-4"></i>
+            <span>Nagasai Reddy-> linkedin</span>
+          </a>
+
+          <!-- GitHub -->
+          <a href="https://github.com/shadowlord-a1" target="_blank" class="social-btn">
+            <span class="social-number">4</span>
+            <i data-lucide="github" class="w-4 h-4"></i>
+            <span>shadowlord-a1-> github</span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Column 4: Dev -->
+      <div>
+        <h4 class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase mb-6">// Infrastructure</h4>
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
+            <i data-lucide="cpu" class="w-4 h-4 text-white/30"></i>
+            <span class="font-mono text-[10px] text-white/60 uppercase">Nodes: online</span>
+          </div>
+        </div>
+        <div class="mt-8 pt-4 border-t border-white/[0.04]">
+          <span class="font-mono text-[10px] text-white/20 tracking-widest">STACK: N8N • SUPABASE • VERCEL</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div
+      class="max-w-6xl mx-auto pt-8 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="font-mono text-[10px] text-white/20 tracking-widest">© 2026 NEXEN.AI — ALL RIGHTS RESERVED</span>
+      <span class="font-mono text-[10px] text-white/15 tracking-widest">BUILT WITH PRECISION</span>
+    </div>
+  </footer>
+
+  <!-- Copy toast notification -->
+  <div id="copy-toast" class="copy-toast">✓ EMAIL COPIED</div>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Mouse-following hero glow
+    const hero = document.getElementById('hero');
+    const glow = document.getElementById('hero-glow');
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      glow.style.left = (e.clientX - rect.left) + 'px';
+      glow.style.top = (e.clientY - rect.top) + 'px';
+    });
+
+    // Magnetic button effect
+    document.querySelectorAll('.mag-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.15}px,${y * 0.15}px)`;
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)' });
+    });
+
+    // Intersection Observer for fade-up
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Navbar scroll effect
+    let lastScroll = 0;
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      const st = window.pageYOffset;
+      if (st > 100) { navbar.style.background = 'rgba(0,0,0,0.6)'; navbar.style.borderBottom = '1px solid rgba(204,255,0,0.06)' }
+      else { navbar.style.background = 'rgba(255,255,255,0.02)'; navbar.style.borderBottom = '1px solid rgba(255,255,255,0.04)' }
+      lastScroll = st;
+    });
+
+    // Contact form — Supabase connection
+    const SUPABASE_URL = 'https://fgrwkuovoxxmttcbcfni.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZncndrdW92b3h4bXR0Y2JjZm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjQxMDcsImV4cCI6MjA5MDY0MDEwN30.iLpZqcZuBuvNAzB8lbL3T2I14PBluzaUWX2DPpO6-Wk';
+
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('form-status');
+      const name = document.getElementById('input-name').value;
+      const email = document.getElementById('input-email').value;
+      const message = document.getElementById('input-message').value;
+      status.innerHTML = '<span class="text-cyan">TRANSMITTING...</span>';
+      try {
+        if (SUPABASE_URL.includes('YOUR_PROJECT')) {
+          // Demo mode
+          await new Promise(r => setTimeout(r, 1200));
+          status.innerHTML = '<span class="text-lime">✓ TRANSMISSION COMPLETE — RESPONSE IN 24H</span>';
+          e.target.reset();
+          return;
+        }
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/contacts`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ name, email, message })
+        });
+        if (res.ok) {
+          status.innerHTML = '<span class="text-lime">✓ TRANSMISSION COMPLETE</span>';
+
+          // 🔥 TELEGRAM ALERT
+          fetch(`https://api.telegram.org/bot8647486672:AAFEcGexzlzQZzuIY62wzcUHqhwwpKPl0cA/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: '8126001074',
+              text: `🚀 New Lead
+
+Name: ${name}
+Email: ${email}
+Message: ${message}`
+            })
+          });
+
+          e.target.reset();
+        }
+        else { status.innerHTML = '<span class="text-red-400">✗ ERROR: RETRY</span>' }
+      } catch (err) { status.innerHTML = '<span class="text-red-400">✗ NETWORK ERROR</span>' }
+    });
+
+    // Copy email to clipboard
+    function copyEmail() {
+      navigator.clipboard.writeText('nagasaireddy0123@gmail.com').then(() => {
+        const toast = document.getElementById('copy-toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      });
+    }
+
+    // LIVE NEWS FEED
+    const newsContainer = document.getElementById("news-container");
+
+    function addNews(item) {
+      const div = document.createElement("div");
+      div.className = "news-item";
+      div.innerHTML = `${item.emoji} ${item.headline}`;
+      newsContainer.prepend(div);
+
+      if (newsContainer.children.length > 12) {
+        newsContainer.removeChild(newsContainer.lastChild);
+      }
+    }
+
+    async function loadNews() {
+      try {
+        const res = await fetch("/api/news");
+        const data = await res.json();
+        newsContainer.innerHTML = "";
+        data.forEach(addNews);
+      } catch (e) {
+        console.log("Waiting for backend...");
+      }
+    }
+
+    setInterval(loadNews, 5000);
+    loadNews();
+
+    // ROTATING WORKFLOW SCREENSHOTS
+    const wfImages = ["workflow1.png", "workflow2.png", "workflow3.png"];
+    let wfIndex = 0;
+
+    setInterval(() => {
+      const a = document.getElementById("wf1");
+      const b = document.getElementById("wf2");
+
+      wfIndex = (wfIndex + 1) % wfImages.length;
+
+      b.src = wfImages[wfIndex];
+      b.style.opacity = 1;
+      a.style.opacity = 0;
+
+      setTimeout(() => {
+        a.src = wfImages[wfIndex];
+        a.style.opacity = 1;
+        b.style.opacity = 0;
+      }, 1000);
+
+    }, 3000);
+  </script>
+</body>
+
+</html>

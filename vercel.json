@@ -4,16 +4,15 @@
     {
       "src": "api/index.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "public/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.js" },
     { "src": "/images/(.*)", "dest": "/public/images/$1" },
-    { "src": "/(.*\\.[a-z]+$)", "dest": "/public/$1" },
+    { "src": "/public/(.*)", "dest": "/public/$1" },
+    { "src": "/Agency-logo.png", "dest": "/public/Agency-logo.png" },
+    { "src": "/workflow(.*)\\.png", "dest": "/public/workflow$1.png" },
+    { "src": "/(.*\\..*)", "dest": "/public/$1" },
     { "src": "/(.*)", "dest": "/api/index.js" }
   ],
   "env": {

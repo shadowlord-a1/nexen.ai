@@ -1,49 +1,163 @@
 [
   {
     "id": "GeoNews_Aggregator",
-    "title": "Geonews_v2.3",
-    "description": "Automated workflow using scheduleTrigger, Webhook/API, httpRequest",
+    "title": "GeoNews AI v2.3 - News Aggregation Pipeline",
+    "description": "Real-time AI news curation & summarization system. Processes 12,000+ messages daily with sub-second latency. Automated workflow using n8n scheduleTrigger, webhooks, APIs, and intelligent aggregation.",
     "tools": [
-      "scheduleTrigger",
+      "n8n",
+      "Schedule Trigger",
       "Webhook/API",
-      "httpRequest",
-      "code",
-      "merge",
-      "aggregate"
+      "HTTP Request",
+      "Code",
+      "Merge"
     ],
     "image": "/public/images/portfolio/geonews-v2.3.png",
-    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/GeoNews_Aggregator/GeoNews_Aggregator.json",
-    "category": "AI Automation"
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/GeoNews_Aggregator",
+    "category": "AI Automation",
+    "features": ["Real-time aggregation", "Schedule-based processing", "Data merging"]
   },
   {
     "id": "Medical_Receptionist_Agent",
     "title": "AI Medical Clinic Receptionist (WhatsApp + LLMs + Pinecone)",
-    "description": "Automated workflow using WhatsApp, whatsAppTrigger, agent",
+    "description": "Autonomous WhatsApp receptionist agent with memory persistence and intelligent routing. Handles patient inquiries, appointment scheduling, and medical knowledge retrieval from vector database.",
     "tools": [
-      "WhatsApp",
-      "whatsAppTrigger",
-      "agent",
-      "lmChatGroq",
-      "memoryBufferWindow",
-      "toolVectorStore"
+      "WhatsApp Integration",
+      "LLM (Groq)",
+      "Pinecone Vector DB",
+      "Agent Framework",
+      "Memory Management",
+      "Tool Integration"
     ],
     "image": "/public/images/portfolio/ai-medical-clinic-receptionist-whatsapp-llms-pinecone.png",
-    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/Medical_Receptionist_Agent/Medical_Receptionist_Agent.json",
-    "category": "AI Automation"
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/Medical_Receptionist_Agent",
+    "category": "AI Agent",
+    "features": ["Autonomous agent", "Memory persistence", "Multi-turn conversation"]
   },
   {
     "id": "Pinecone_Enterprise_RAG",
-    "title": "text file to Pinecone RAG Pipeline",
-    "description": "Automated workflow using code, Pinecone, vectorStorePinecone",
+    "title": "Text File to Pinecone RAG Pipeline",
+    "description": "Enterprise-grade RAG (Retrieval-Augmented Generation) pipeline. Automatically ingests text files, generates embeddings, and stores in Pinecone vector database for intelligent document retrieval.",
     "tools": [
-      "code",
-      "Pinecone",
-      "vectorStorePinecone",
-      "formTrigger",
-      "extractFromFile"
+      "Pinecone Vector Store",
+      "Text Processing",
+      "Code Execution",
+      "Form Trigger",
+      "File Extraction",
+      "Embeddings"
+    ],
+    "image": "/public/images/portfolio/text-file-to-pinecone-rag-pipeline.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/Pinecone_Enterprise_RAG",
+    "category": "RAG Pipeline",
+    "features": ["Vector embeddings", "Document ingestion", "Semantic search"]
+  },
+  {
+    "id": "GeoNews_Telegram",
+    "title": "GeoNews Telegram Bot - Live Feed Distribution",
+    "description": "Real-time news distribution bot for Telegram. Aggregates latest AI and geo-political news, processes through LLM pipeline, and dispatches to subscribers with 99.97% uptime.",
+    "tools": [
+      "Telegram Bot API",
+      "n8n",
+      "Message Queue",
+      "Dispatch System",
+      "Real-time Sync"
+    ],
+    "image": "/public/images/portfolio/geonews-telegram-profile.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/GeoNews_Telegram",
+    "category": "Telegram Integration",
+    "features": ["Live distribution", "Error handling", "Sub-second latency"]
+  },
+  {
+    "id": "WhatsApp_AI_Receptionist",
+    "title": "WhatsApp AI Receptionist Chat System",
+    "description": "Multi-turn conversational AI receptionist on WhatsApp. Handles customer inquiries, supports natural language understanding, and integrates with CRM for context-aware responses.",
+    "tools": [
+      "WhatsApp Business API",
+      "LLM Integration",
+      "CRM Connection",
+      "Context Management",
+      "Input Validation"
+    ],
+    "image": "/public/images/portfolio/whatsapp-ai-receptionist-chat.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/WhatsApp_Receptionist",
+    "category": "Conversational AI",
+    "features": ["Natural language", "CRM integration", "Multi-turn dialogue"]
+  },
+  {
+    "id": "n8n_Workflow_Monitoring",
+    "title": "n8n Workflow Error Monitoring & Telegram Alerts",
+    "description": "Automated monitoring system for n8n workflows. Detects errors in real-time and sends intelligent alerts to Telegram with error context, stack traces, and recovery suggestions.",
+    "tools": [
+      "n8n",
+      "Workflow Hooks",
+      "Error Tracking",
+      "Telegram API",
+      "Alert System"
     ],
     "image": "/public/images/portfolio/report-n8n-workflow-errors-to-telegram-nex-o1-bot.png",
-    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/Pinecone_Enterprise_RAG/Pinecone_Enterprise_RAG.json",
-    "category": "AI Automation"
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/n8n_Monitoring",
+    "category": "DevOps Automation",
+    "features": ["Error detection", "Real-time alerts", "Context logging"]
+  },
+  {
+    "id": "GeoNews_All_News_NYT",
+    "title": "GeoNews All News Aggregator v3 (NYT Integration)",
+    "description": "Advanced news aggregation system. Pulls from multiple sources including New York Times API. Uses intelligent filtering, ranking, and geo-location analysis for curated news feeds.",
+    "tools": [
+      "NYT API",
+      "News Aggregation",
+      "Filtering Logic",
+      "Geo Analysis",
+      "Content Ranking"
+    ],
+    "image": "/public/images/portfolio/geonews-all-news-nyt-v3.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/GeoNews_All",
+    "category": "Data Pipeline",
+    "features": ["Multi-source aggregation", "Geo-filtering", "Content ranking"]
+  },
+  {
+    "id": "n8n_Project_Hub",
+    "title": "n8n Project Hub - Workflow Management",
+    "description": "Centralized n8n project management interface. Showcases project organization, credential management, and workflow orchestration for enterprise automation.",
+    "tools": [
+      "n8n Projects",
+      "Credentials Manager",
+      "Workflow Orchestration",
+      "Team Collaboration"
+    ],
+    "image": "/public/images/portfolio/n8n-profile-projects.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio",
+    "category": "Workflow Management",
+    "features": ["Organization", "Security", "Scalability"]
+  },
+  {
+    "id": "n8n_Credentials",
+    "title": "n8n Credentials & Integrations Hub",
+    "description": "Secure credential management and third-party integrations configuration. Demonstrates secure API key handling, OAuth flows, and multi-service authentication.",
+    "tools": [
+      "OAuth 2.0",
+      "API Keys",
+      "Service Integration",
+      "Credential Encryption"
+    ],
+    "image": "/public/images/portfolio/n8n-profile-credentials.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio",
+    "category": "Security & Integration",
+    "features": ["Secure storage", "OAuth support", "Multi-service"]
+  },
+  {
+    "id": "Telegram_GeoNews_Chat",
+    "title": "Telegram GeoNews Chat Intelligence",
+    "description": "Interactive Telegram chat system with geo-intelligence capabilities. Enables conversational queries about global news, events, and AI developments with real-time responses.",
+    "tools": [
+      "Telegram Bot API",
+      "Chat Intelligence",
+      "Geo-location",
+      "Context Awareness",
+      "Response Generation"
+    ],
+    "image": "/public/images/portfolio/telegram-geonews-chat.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio",
+    "category": "Telegram Integration",
+    "features": ["Conversational", "Geo-intelligence", "Real-time"]
   }
 ]

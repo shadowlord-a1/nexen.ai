@@ -1,0 +1,34 @@
+# Environment variables - NEVER commit
+.env
+.env.local
+.env.*.local
+.env.*.private
+
+# Dependencies
+node_modules/
+package-lock.json
+npm-debug.log
+yarn-error.log
+
+# Logs
+*.log
+server.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Build outputs
+dist/
+build/
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Temp files
+*.tmp
+*.temp

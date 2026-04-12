@@ -21,21 +21,25 @@ app.use('/public', express.static(path.join(__dirname, '../public')));
 
 // Explicit image route handler for Vercel
 app.get('/images/portfolio/:filename', (req, res) => {
-  const filePath = path.join(__dirname, '../public/images/portfolio', req.params.filename);
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, '../public/images/portfolio', filename);
+  const normalizedPath = path.normalize(filePath);
+  const basePath = path.normalize(path.join(__dirname, '../public/images/portfolio'));
 
   // Security: prevent directory traversal
-  if (!filePath.startsWith(path.join(__dirname, '../public/images/portfolio'))) {
+  if (!normalizedPath.startsWith(basePath)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
-  res.setHeader('Cache-Control', 'public, max-age=31536000');
+  // Check if file exists
+  if (!fs.existsSync(filePath)) {
+    console.error('Image not found:', filePath);
+    return res.status(404).json({ error: 'Image not found' });
+  }
+
+  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
   res.setHeader('Content-Type', 'image/png');
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      console.error('Image not found:', filePath);
-      res.status(404).json({ error: 'Image not found' });
-    }
-  });
+  res.sendFile(filePath);
 });
 
 // In-memory storage

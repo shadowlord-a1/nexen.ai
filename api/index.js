@@ -28,20 +28,39 @@ app.get('/images/portfolio/:filename', (req, res) => {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
-  const filePath = path.join(__dirname, '../public/images/portfolio', filename);
+  // Try multiple possible paths for Vercel compatibility
+  const possiblePaths = [
+    path.join(__dirname, '../public/images/portfolio', filename),
+    path.join(__dirname, './public/images/portfolio', filename),
+    path.join(process.cwd(), 'public/images/portfolio', filename),
+    path.join(process.cwd(), '../public/images/portfolio', filename)
+  ];
 
-  try {
-    // Read file directly for better Vercel compatibility
-    const fileBuffer = fs.readFileSync(filePath);
+  let fileBuffer;
+  let foundPath;
 
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-    res.setHeader('Content-Type', 'image/png');
-    res.setHeader('Content-Length', fileBuffer.length);
-    res.send(fileBuffer);
-  } catch (err) {
-    console.error('Image not found:', filePath, err.message);
-    res.status(404).json({ error: 'Image not found' });
+  for (const filePath of possiblePaths) {
+    try {
+      if (fs.existsSync(filePath)) {
+        fileBuffer = fs.readFileSync(filePath);
+        foundPath = filePath;
+        break;
+      }
+    } catch (err) {
+      // Continue to next path
+    }
   }
+
+  if (!fileBuffer) {
+    console.error('Image not found - tried paths:', possiblePaths);
+    return res.status(404).json({ error: 'Image not found', tried: possiblePaths });
+  }
+
+  console.log('Serving image from:', foundPath);
+  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  res.setHeader('Content-Type', 'image/png');
+  res.setHeader('Content-Length', fileBuffer.length);
+  res.send(fileBuffer);
 });
 
 // In-memory storage

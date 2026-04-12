@@ -12,7 +12,8 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.js" },
-    { "src": "/images/portfolio/(.*)", "dest": "/api/index.js" },
+    { "src": "/images/(.*)", "dest": "/public/images/$1" },
+    { "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|json|txt|woff|woff2)$)", "dest": "/public/$1" },
     { "src": "/(.*)", "dest": "/api/index.js" }
   ]
 }

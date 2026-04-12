@@ -11,7 +11,7 @@
       "Code",
       "Merge"
     ],
-    "image": "/public/images/portfolio/geonews-v2.3.png",
+    "image": "/images/portfolio/geonews-v2.3.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/GeoNews_Aggregator",
     "category": "AI Automation",
     "features": ["Real-time aggregation", "Schedule-based processing", "Data merging"]
@@ -28,7 +28,7 @@
       "Memory Management",
       "Tool Integration"
     ],
-    "image": "/public/images/portfolio/ai-medical-clinic-receptionist-whatsapp-llms-pinecone.png",
+    "image": "/images/portfolio/ai-medical-clinic-receptionist-whatsapp-llms-pinecone.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/Medical_Receptionist_Agent",
     "category": "AI Agent",
     "features": ["Autonomous agent", "Memory persistence", "Multi-turn conversation"]
@@ -45,7 +45,7 @@
       "File Extraction",
       "Embeddings"
     ],
-    "image": "/public/images/portfolio/text-file-to-pinecone-rag-pipeline.png",
+    "image": "/images/portfolio/text-file-to-pinecone-rag-pipeline.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/Pinecone_Enterprise_RAG",
     "category": "RAG Pipeline",
     "features": ["Vector embeddings", "Document ingestion", "Semantic search"]
@@ -61,7 +61,7 @@
       "Dispatch System",
       "Real-time Sync"
     ],
-    "image": "/public/images/portfolio/geonews-telegram-profile.png",
+    "image": "/images/portfolio/geonews-telegram-profile.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/GeoNews_Telegram",
     "category": "Telegram Integration",
     "features": ["Live distribution", "Error handling", "Sub-second latency"]
@@ -77,7 +77,7 @@
       "Context Management",
       "Input Validation"
     ],
-    "image": "/public/images/portfolio/whatsapp-ai-receptionist-chat.png",
+    "image": "/images/portfolio/whatsapp-ai-receptionist-chat.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/WhatsApp_Receptionist",
     "category": "Conversational AI",
     "features": ["Natural language", "CRM integration", "Multi-turn dialogue"]
@@ -93,7 +93,7 @@
       "Telegram API",
       "Alert System"
     ],
-    "image": "/public/images/portfolio/report-n8n-workflow-errors-to-telegram-nex-o1-bot.png",
+    "image": "/images/portfolio/report-n8n-workflow-errors-to-telegram-nex-o1-bot.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/n8n_Monitoring",
     "category": "DevOps Automation",
     "features": ["Error detection", "Real-time alerts", "Context logging"]
@@ -109,7 +109,7 @@
       "Geo Analysis",
       "Content Ranking"
     ],
-    "image": "/public/images/portfolio/geonews-all-news-nyt-v3.png",
+    "image": "/images/portfolio/geonews-all-news-nyt-v3.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/GeoNews_All",
     "category": "Data Pipeline",
     "features": ["Multi-source aggregation", "Geo-filtering", "Content ranking"]
@@ -124,7 +124,7 @@
       "Workflow Orchestration",
       "Team Collaboration"
     ],
-    "image": "/public/images/portfolio/n8n-profile-projects.png",
+    "image": "/images/portfolio/n8n-profile-projects.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio",
     "category": "Workflow Management",
     "features": ["Organization", "Security", "Scalability"]
@@ -139,7 +139,7 @@
       "Service Integration",
       "Credential Encryption"
     ],
-    "image": "/public/images/portfolio/n8n-profile-credentials.png",
+    "image": "/images/portfolio/n8n-profile-credentials.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio",
     "category": "Security & Integration",
     "features": ["Secure storage", "OAuth support", "Multi-service"]
@@ -155,7 +155,7 @@
       "Context Awareness",
       "Response Generation"
     ],
-    "image": "/public/images/portfolio/telegram-geonews-chat.png",
+    "image": "/images/portfolio/telegram-geonews-chat.png",
     "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio",
     "category": "Telegram Integration",
     "features": ["Conversational", "Geo-intelligence", "Real-time"]

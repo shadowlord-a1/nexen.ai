@@ -125,13 +125,7 @@ app.get('/api/projects', (req, res) => {
   try {
     const projectsPath = path.join(__dirname, '../data/projects.json');
     const projects = JSON.parse(fs.readFileSync(projectsPath, 'utf8'));
-
-    const updatedProjects = projects.map(p => ({
-      ...p,
-      image: p.image.replace('/public/', '/images/')
-    }));
-
-    res.json(updatedProjects);
+    res.json(projects);
   } catch (err) {
     console.error('Error loading projects:', err);
     res.status(500).json({ error: 'Failed to load projects' });

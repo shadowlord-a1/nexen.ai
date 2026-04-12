@@ -19,6 +19,25 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
 app.use('/public', express.static(path.join(__dirname, '../public')));
 
+// Explicit image route handler for Vercel
+app.get('/images/portfolio/:filename', (req, res) => {
+  const filePath = path.join(__dirname, '../public/images/portfolio', req.params.filename);
+
+  // Security: prevent directory traversal
+  if (!filePath.startsWith(path.join(__dirname, '../public/images/portfolio'))) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
+  res.setHeader('Cache-Control', 'public, max-age=31536000');
+  res.setHeader('Content-Type', 'image/png');
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error('Image not found:', filePath);
+      res.status(404).json({ error: 'Image not found' });
+    }
+  });
+});
+
 // In-memory storage
 let newsData = [
   { emoji: '🤖', headline: 'Claude 3.5 Releases New Vision Capabilities' },

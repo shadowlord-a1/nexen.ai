@@ -628,6 +628,17 @@
     </div>
   </section>
 
+  <!-- AI AUTOMATIONS / WORK SECTION -->
+  <section id="work" class="py-24 px-4 max-w-6xl mx-auto">
+    <div class="mb-16 fade-up">
+      <span class="font-mono text-[11px] tracking-[0.3em] text-cyan uppercase">// Portfolio</span>
+      <h2 class="font-display font-800 text-4xl md:text-5xl tracking-tighter uppercase mt-3">AI Automations<br />& Work<span class="text-lime">.</span></h2>
+    </div>
+    <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Dynamic content injected here via JS -->
+    </div>
+  </section>
+
   <!-- LIVE PIPELINE — N8N VISUALIZER -->
   <section id="pipeline" class="py-24 px-4 max-w-6xl mx-auto">
     <div class="mb-16 fade-up">
@@ -995,6 +1006,52 @@ Message: ${message}`
       wfAngle -= 90;
       wfCube.style.transform = `translateZ(-160px) rotateX(${wfAngle}deg)`;
     }, 3000);
+
+    // PORTFOLIO DYNAMIC RENDERING
+    async function loadPortfolio() {
+      try {
+        const res = await fetch('data/projects.json');
+        const projects = await res.json();
+        const grid = document.getElementById('portfolio-grid');
+        
+        grid.innerHTML = projects.map(p => `
+          <div class="glass rounded-2xl p-6 fade-up flex flex-col h-full hover:border-[#CCFF00] hover:shadow-[0_0_20px_rgba(204,255,0,0.1)] transition-all duration-300" style="border: 1px solid rgba(255,255,255,0.05)">
+            <div class="relative w-full h-48 mb-6 rounded-xl overflow-hidden bg-black/50 border border-white/[0.04]">
+              <img src="${p.image.replace('/public/', './')}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+            </div>
+            <h3 class="font-display font-700 text-xl tracking-tighter mb-3 truncate" title="${p.title}">${p.title}<span class="text-[#CCFF00]">.</span></h3>
+            <p class="text-white/40 text-sm mb-6 flex-grow">${p.description}</p>
+            
+            <div class="flex flex-wrap gap-2 mb-6">
+              ${p.tools.map(tool => `<span class="px-3 py-1 font-mono text-[10px] tracking-wider text-[#00F0FF] bg-white/[0.03] border border-white/[0.06] rounded-full uppercase">${tool}</span>`).join('')}
+            </div>
+            
+            <a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="mag-btn relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#CCFF00] text-black font-mono font-bold text-xs tracking-widest uppercase rounded-xl hover:bg-white transition-colors w-full">
+              <span>View Workflow</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        `).join('');
+
+        // Re-attach magnetic events for new buttons
+        document.querySelectorAll('#portfolio-grid .mag-btn').forEach(btn => {
+          btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = \`translate(\${x * 0.15}px,\${y * 0.15}px)\`;
+          });
+          btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)' });
+        });
+
+      } catch (err) {
+        console.error("Failed to load portfolio:", err);
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', loadPortfolio);
   </script>
 </body>
 

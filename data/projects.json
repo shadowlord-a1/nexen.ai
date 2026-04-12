@@ -1,0 +1,49 @@
+[
+  {
+    "id": "GeoNews_Aggregator",
+    "title": "Geonews_v2.3",
+    "description": "Automated workflow using scheduleTrigger, Webhook/API, httpRequest",
+    "tools": [
+      "scheduleTrigger",
+      "Webhook/API",
+      "httpRequest",
+      "code",
+      "merge",
+      "aggregate"
+    ],
+    "image": "/public/images/portfolio/geonews-v2.3.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/GeoNews_Aggregator/GeoNews_Aggregator.json",
+    "category": "AI Automation"
+  },
+  {
+    "id": "Medical_Receptionist_Agent",
+    "title": "AI Medical Clinic Receptionist (WhatsApp + LLMs + Pinecone)",
+    "description": "Automated workflow using WhatsApp, whatsAppTrigger, agent",
+    "tools": [
+      "WhatsApp",
+      "whatsAppTrigger",
+      "agent",
+      "lmChatGroq",
+      "memoryBufferWindow",
+      "toolVectorStore"
+    ],
+    "image": "/public/images/portfolio/ai-medical-clinic-receptionist-whatsapp-llms-pinecone.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/Medical_Receptionist_Agent/Medical_Receptionist_Agent.json",
+    "category": "AI Automation"
+  },
+  {
+    "id": "Pinecone_Enterprise_RAG",
+    "title": "text file to Pinecone RAG Pipeline",
+    "description": "Automated workflow using code, Pinecone, vectorStorePinecone",
+    "tools": [
+      "code",
+      "Pinecone",
+      "vectorStorePinecone",
+      "formTrigger",
+      "extractFromFile"
+    ],
+    "image": "/public/images/portfolio/report-n8n-workflow-errors-to-telegram-nex-o1-bot.png",
+    "githubUrl": "https://github.com/SaiReddy-Sr/AI-Automation-Portfolio/tree/main/Pinecone_Enterprise_RAG/Pinecone_Enterprise_RAG.json",
+    "category": "AI Automation"
+  }
+]

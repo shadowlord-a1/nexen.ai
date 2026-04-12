@@ -14,73 +14,35 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// Serve static files from public directory
-app.use(express.static(path.join(__dirname, '../public')));
-app.use('/images', express.static(path.join(__dirname, '../public/images')));
-app.use('/public', express.static(path.join(__dirname, '../public')));
+// Log directory info for debugging
+console.log('API Server __dirname:', __dirname);
+console.log('API Server process.cwd():', process.cwd());
+const publicPath = path.join(__dirname, '../public');
+console.log('Public path:', publicPath);
+console.log('Public path exists:', fs.existsSync(publicPath));
+const imagesPath = path.join(publicPath, 'images');
+console.log('Images path:', imagesPath);
+console.log('Images path exists:', fs.existsSync(imagesPath));
 
-// Explicit image route handler for Vercel - read and send directly
-app.get('/images/portfolio/:filename', (req, res) => {
-  const filename = req.params.filename;
-
-  // Security: prevent directory traversal
-  if (filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
-    return res.status(403).json({ error: 'Forbidden' });
-  }
-
-  // Try multiple possible paths for Vercel compatibility
-  const possiblePaths = [
-    path.join(__dirname, '../public/images/portfolio', filename),
-    path.join(__dirname, './public/images/portfolio', filename),
-    path.join(process.cwd(), 'public/images/portfolio', filename),
-    path.join(process.cwd(), '../public/images/portfolio', filename)
-  ];
-
-  let fileBuffer;
-  let foundPath;
-
-  for (const filePath of possiblePaths) {
-    try {
-      if (fs.existsSync(filePath)) {
-        fileBuffer = fs.readFileSync(filePath);
-        foundPath = filePath;
-        break;
-      }
-    } catch (err) {
-      // Continue to next path
-    }
-  }
-
-  if (!fileBuffer) {
-    console.error('Image not found - tried paths:', possiblePaths);
-    return res.status(404).json({ error: 'Image not found', tried: possiblePaths });
-  }
-
-  console.log('Serving image from:', foundPath);
-  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-  res.setHeader('Content-Type', 'image/png');
-  res.setHeader('Content-Length', fileBuffer.length);
-  res.send(fileBuffer);
-});
-
-// In-memory storage
-let newsData = [
-  { emoji: '🤖', headline: 'Claude 3.5 Releases New Vision Capabilities' },
-  { emoji: '🚀', headline: 'AI Agents Automate Enterprise Workflows' },
-  { emoji: '💡', headline: 'LLM Fine-Tuning Breakthrough in Production' },
-  { emoji: '🔗', headline: 'Multi-Agent Systems Show Promise in Testing' },
-  { emoji: '📊', headline: 'Automation Drives 40% Efficiency Gains' }
-];
-
-let contactsData = [];
+// Serve static files from public directory with highest priority
+app.use(express.static(publicPath, {
+  maxAge: '1y',
+  etag: false
+}));
 
 // API Routes
 app.get('/api/news', (req, res) => {
+  let newsData = [
+    { emoji: '🤖', headline: 'Claude 3.5 Releases New Vision Capabilities' },
+    { emoji: '🚀', headline: 'AI Agents Automate Enterprise Workflows' },
+    { emoji: '💡', headline: 'LLM Fine-Tuning Breakthrough in Production' },
+    { emoji: '🔗', headline: 'Multi-Agent Systems Show Promise in Testing' },
+    { emoji: '📊', headline: 'Automation Drives 40% Efficiency Gains' }
+  ];
   res.json(newsData);
 });
 
 app.post('/api/news', (req, res) => {
-  newsData = req.body.news || newsData;
   res.json({ success: true });
 });
 
@@ -100,8 +62,6 @@ app.post('/api/contact', async (req, res) => {
       message,
       timestamp: new Date().toISOString()
     };
-
-    contactsData.push(contact);
 
     console.log('\n✅ NEW CONTACT SUBMISSION:');
     console.log('─'.repeat(50));
@@ -126,8 +86,6 @@ app.post('/api/contact', async (req, res) => {
         });
         if (supabaseRes.ok) {
           console.log('📊 ✅ Stored in Supabase');
-        } else {
-          console.error('⚠️ Supabase response:', supabaseRes.status);
         }
       } catch (err) {
         console.error('⚠️ Supabase storage failed:', err.message);
@@ -162,18 +120,19 @@ app.post('/api/contact', async (req, res) => {
 });
 
 app.get('/api/contacts', (req, res) => {
-  res.json(contactsData);
+  res.json([]);
 });
 
+// Projects endpoint
 app.get('/api/projects', (req, res) => {
   try {
     const projectsPath = path.join(__dirname, '../data/projects.json');
     const projects = JSON.parse(fs.readFileSync(projectsPath, 'utf8'));
 
-    // Transform image paths to use the /images/portfolio route
+    // Transform image paths to use the static file serving
     const updatedProjects = projects.map(p => ({
       ...p,
-      image: p.image.replace('/public/', '/images/')
+      image: p.image.replace('/public/', '/')
     }));
 
     res.json(updatedProjects);
@@ -183,14 +142,14 @@ app.get('/api/projects', (req, res) => {
   }
 });
 
-// Serve static files
+// Serve index.html for root and SPA fallback
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// Fallback to index.html for SPA
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 module.exports = app;
+

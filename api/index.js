@@ -19,27 +19,29 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
 app.use('/public', express.static(path.join(__dirname, '../public')));
 
-// Explicit image route handler for Vercel
+// Explicit image route handler for Vercel - read and send directly
 app.get('/images/portfolio/:filename', (req, res) => {
   const filename = req.params.filename;
-  const filePath = path.join(__dirname, '../public/images/portfolio', filename);
-  const normalizedPath = path.normalize(filePath);
-  const basePath = path.normalize(path.join(__dirname, '../public/images/portfolio'));
 
   // Security: prevent directory traversal
-  if (!normalizedPath.startsWith(basePath)) {
+  if (filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
-  // Check if file exists
-  if (!fs.existsSync(filePath)) {
-    console.error('Image not found:', filePath);
-    return res.status(404).json({ error: 'Image not found' });
-  }
+  const filePath = path.join(__dirname, '../public/images/portfolio', filename);
 
-  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-  res.setHeader('Content-Type', 'image/png');
-  res.sendFile(filePath);
+  try {
+    // Read file directly for better Vercel compatibility
+    const fileBuffer = fs.readFileSync(filePath);
+
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Content-Length', fileBuffer.length);
+    res.send(fileBuffer);
+  } catch (err) {
+    console.error('Image not found:', filePath, err.message);
+    res.status(404).json({ error: 'Image not found' });
+  }
 });
 
 // In-memory storage
@@ -148,7 +150,14 @@ app.get('/api/projects', (req, res) => {
   try {
     const projectsPath = path.join(__dirname, '../data/projects.json');
     const projects = JSON.parse(fs.readFileSync(projectsPath, 'utf8'));
-    res.json(projects);
+
+    // Transform image paths to use the /images/portfolio route
+    const updatedProjects = projects.map(p => ({
+      ...p,
+      image: p.image.replace('/public/', '/images/')
+    }));
+
+    res.json(updatedProjects);
   } catch (err) {
     console.error('Error loading projects:', err);
     res.status(500).json({ error: 'Failed to load projects' });

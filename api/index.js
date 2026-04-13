@@ -8,10 +8,10 @@ const envPath = fs.existsSync(path.join(__dirname, '../.env.local'))
 require('dotenv').config({ path: envPath });
 
 // Load environment variables
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_KEY = process.env.SUPABASE_KEY;
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://fgrwkuovoxxmttcbcfni.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZncndrdW92b3h4bXR0Y2JjZm5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjQxMDcsImV4cCI6MjA5MDY0MDEwN30.iLpZqcZuBuvNAzB8lbL3T2I14PBluzaUWX2DPpO6-Wk';
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8647486672:AAFEcGexzlzQZzuIY62wzcUHqhwwpKPl0cA';
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '8126001074';
 
 const app = express();
 

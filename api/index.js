@@ -1,7 +1,11 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-require('dotenv').config();
+// Load .env.local from parent directory if it exists, otherwise fallback to .env
+const envPath = fs.existsSync(path.join(__dirname, '../.env.local')) 
+  ? path.join(__dirname, '../.env.local') 
+  : path.join(__dirname, '../.env');
+require('dotenv').config({ path: envPath });
 
 // Load environment variables
 const SUPABASE_URL = process.env.SUPABASE_URL;

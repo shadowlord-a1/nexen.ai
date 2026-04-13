@@ -104,8 +104,7 @@ app.post('/api/contact', async (req, res) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             chat_id: TELEGRAM_CHAT_ID,
-            text: `🚀 *New Lead from Nexen.AI*\n\n📝 *Name:* ${name}\n📧 *Email:* ${email}\n💬 *Message:* ${message}`,
-            parse_mode: 'Markdown'
+            text: `🚀 New Lead from Nexen.AI\n\n📝 Name: ${name}\n📧 Email: ${email}\n💬 Message: ${message}`
           })
         });
         if (telegramRes.ok) {
